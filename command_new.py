@@ -1,16 +1,19 @@
-from command import Command
+from command_creator import Command_creator
 from dna_sequence import dna_sequence
 
 
-class Command_new(Command):
+class Command_new(Command_creator):
     __num_sequence_default_name = 0
 
-    def __init__(self, sequence, sequence_name=None):
+    def __init__(self, arguments):
+        [sequence, sequence_name] = self.parser_arguments(arguments)
+        if sequence_name is None:
+            sequence_name = f"seq{Command_new.__num_sequence_default_name}"
+            Command_new.__num_sequence_default_name += 1
         self.__sequence = sequence
-        self.__sequence_name = sequence_name
+        super().__init__(sequence_name)
 
-    def execute(self, num_sequence):
-        if self.__sequence_name is None:
-            sequence_name = f"seq{self.__num_sequence_default_name}"
-            self.__num_sequence_default_name += 1
-        return dna_sequence(self.__sequence, num_sequence, self.__sequence_name)
+    def execute(self):
+        self.exist_dna_sequence()
+        new_dna_sequence = dna_sequence(self.__sequence, len(Command_new.data_dna), self.sequence_name)
+        return self.add_to_db(new_dna_sequence)

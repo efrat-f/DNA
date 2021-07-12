@@ -9,7 +9,9 @@ class Subject(ABC):
     The Subject interface declares a set of methods for managing subscribers.
     """
 
-    command = None
+    def __init__(self):
+        self.arguments = []
+        self.command = None
 
     @abstractmethod
     def attach(self, observer: Observer) -> None:
