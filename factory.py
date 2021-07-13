@@ -1,21 +1,18 @@
-from Subject import Subject, Observer
-from batch import Batch
-from command_batch_create import Command_batch_create
-from command_batch_list import Command_batch_list
-from command_batch_load import Command_batch_load
-from command_batch_run import Command_batch_run
-from command_batch_save import Command_batch_save
-from command_batch_show import Command_batch_show
-from command_creator import Command_creator
-from command_del import Command_del
-from command_dup import Command_dup
-from command_findAll import Command_findAll
-from command_new import Command_new
-from command_load import Command_load
-from command_replace import Command_replace
-from command_save import Command_save
-from command_slice import Command_slice
-from confirm import Confirm
+from observer import Subject, Observer
+from CLI.batch import Batch
+from commands.commandsBatch.commandbatchlist import CommandBatchList
+from commands.commandsBatch.commandbatchload import CommandBatchLoad
+from commands.commandsBatch.commandbatchrun import CommandBatchRun
+from commands.commandsBatch.commandbatchsave import CommandBatchSave
+from commands.commandsBatch.commandbatchshow import CommandBatchShow
+from commands.commandCreator.commanddup import CommandDup
+from commands.command_findAll import CommandFindAll
+from commands.commandCreator.commandnew import CommandNew
+from commands.commandCreator.commandload import CommandLoad
+from commands.commandreplace import CommandReplace
+from commands.commandsave import CommandSave
+from commands.commandslice import CommandSlice
+from CLI.confirm import Confirm
 
 
 class Factory(Observer):
@@ -24,20 +21,21 @@ class Factory(Observer):
         """Factory Method"""
         self.__num_sequence = 0
         self.commands = {
-            "new": Command_new,
-            "load": Command_load,
-            "dup": Command_dup,
-            "slice": Command_slice,
-            "replace": Command_replace,
+            "new": CommandNew,
+            "load": CommandLoad,
+            "dup": CommandDup,
+            "slice": CommandSlice,
+            "replace": CommandReplace,
             "del": Confirm,
-            "save": Command_save,
-            "findall": Command_findAll,
+            "save": CommandSave,
+            "findall": CommandFindAll,
             "batch": Batch,
-            "run": Command_batch_run,
-            "batchlist": Command_batch_list,
-            "batchshow": Command_batch_show,
-            "batchsave": Command_batch_save,
-            "batchload": Command_batch_load
+            "run": CommandBatchRun,
+            "batchlist": CommandBatchList,
+            "batchshow": CommandBatchShow,
+            "batchsave": CommandBatchSave,
+            "batchload": CommandBatchLoad,
+            "quit": Confirm
         }
 
     def update(self, subject: Subject):
